@@ -170,8 +170,13 @@ MediaPlayer::MediaPlayer(int volume)
     d->pos_timer = new NUGUTimer();
     d->pos_timer->setInterval(POSITION_POLLING_TIMEOUT_500MS);
     d->pos_timer->setCallback([&]() {
-        if (!isPlaying())
+        // if (!isPlaying())
+        //     return;
+
+        //>> test
+        if (!isActive())
             return;
+        //<< test
 
         updatePosition();
     });
@@ -494,5 +499,12 @@ NuguPlayer* MediaPlayer::getNuguPlayer()
 {
     return d->player;
 }
+
+//>> test
+bool MediaPlayer::isActive()
+{
+    return isPlaying() || d->state == MediaPlayerState::PAUSED;
+}
+//<< test
 
 } // NuguCore

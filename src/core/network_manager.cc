@@ -215,31 +215,35 @@ bool NetworkManager::setToken(const std::string& token)
 
     nugu_dbg("JWT payload: %s", json_text);
 
-    /* find the 'device:S.I.D.' from the scope */
-    NJson::Reader reader;
-    NJson::Value root;
+    // /* find the 'device:S.I.D.' from the scope */
+    // NJson::Reader reader;
+    // NJson::Value root;
 
-    if (!reader.parse(json_text, root)) {
-        nugu_error("Payload parsing error");
-        g_free(json_text);
-        return false;
-    }
+    // if (!reader.parse(json_text, root)) {
+    //     nugu_error("Payload parsing error");
+    //     g_free(json_text);
+    //     return false;
+    // }
 
     g_free(json_text);
 
-    bool is_connection_oriented = false;
+    // bool is_connection_oriented = false;
 
-    NJson::Value scope = root["scope"];
-    if (scope.isArray()) {
-        NJson::ArrayIndex scope_len = scope.size();
-        for (NJson::ArrayIndex i = 0; i < scope_len; ++i) {
-            nugu_dbg("scope[%d] = %s", i, scope[i].asCString());
-            if (scope[i].asString() == "device:S.I.D.") {
-                is_connection_oriented = true;
-                break;
-            }
-        }
-    }
+    // NJson::Value scope = root["scope"];
+    // if (scope.isArray()) {
+    //     NJson::ArrayIndex scope_len = scope.size();
+    //     for (NJson::ArrayIndex i = 0; i < scope_len; ++i) {
+    //         nugu_dbg("scope[%d] = %s", i, scope[i].asCString());
+    //         if (scope[i].asString() == "device:S.I.D.") {
+    //             is_connection_oriented = true;
+    //             break;
+    //         }
+    //     }
+    // }
+
+    //>> test
+    bool is_connection_oriented = true;
+    //<< test
 
     if (nugu_network_manager_set_token(token.c_str()) < 0) {
         nugu_error("network set token failed");

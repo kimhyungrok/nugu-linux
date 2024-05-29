@@ -469,8 +469,13 @@ std::string AudioPlayerAgent::resume(bool direct_access)
 
 void AudioPlayerAgent::seek(int msec)
 {
+    // if (cur_player)
+    //     cur_player->seek(msec * 1000);
+
+    //>> test
     if (cur_player)
-        cur_player->seek(msec * 1000);
+        cur_player->seek(msec);
+    //<<  test
 }
 
 std::string AudioPlayerAgent::requestFavoriteCommand(bool current_favorite)
@@ -1176,7 +1181,7 @@ void AudioPlayerAgent::parsingPlay(const char* message)
         report_interval_time = report["progressReportIntervalInMilliseconds"].asLargestInt();
     }
 
-    playsync_manager->startSync(getPlayServiceIdInStackControl(root["playStackControl"]), getName());
+    playsync_manager->startSync(getPlayServiceIdInStackControl(root["playStackControl"]), getName(), composeRenderInfo(getNuguDirective(), message));
 
     is_finished = false;
     is_paused_by_unfocus = false;

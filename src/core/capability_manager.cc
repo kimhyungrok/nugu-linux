@@ -300,7 +300,10 @@ bool CapabilityManager::isSupportDirectiveVersion(const std::string& version, IC
     int cur_ver = std::floor(std::stof(cap->getVersion()));
     int dir_ver = std::floor(std::stof(version));
 
-    if (cur_ver != dir_ver)
+    // if (cur_ver != dir_ver)
+    //     return false;
+
+    if (cur_ver < dir_ver)
         return false;
 
     return true;
